@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Enabled Recruitment Platform - 15-Slide Presentation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .heading-font {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .slide-card {
+      aspect-ratio: 16 / 9;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+  <!-- Top Navigation & Controls Bar -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur px-6 py-3 flex items-center justify-between sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-white border border-slate-700 p-0.5 flex items-center justify-center shadow-md overflow-hidden shrink-0">
+        <img src="college_crest_square.png" alt="Easwari Crest" class="w-full h-full object-contain" />
+      </div>
+      <div>
+        <h1 class="font-bold text-sm tracking-wide text-white">TalentAI | Executive Deck</h1>
+        <p class="text-xs text-slate-400">Easwari Engineering College &bull; AI Recruitment Platform</p>
+      </div>
+    </div>
+
+    <!-- Slide Indicators & Controls -->
+    <div class="flex items-center gap-3">
+      <button id="prevBtn" onclick="changeSlide(-1)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium transition flex items-center gap-1.5 border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed">
+        <i class="fa-solid fa-chevron-left text-xs"></i> Prev
+      </button>
+      
+      <div class="flex items-center gap-2 px-3 py-1 bg-slate-800/80 rounded-lg border border-slate-700 text-xs font-medium">
+        <span class="text-slate-400">Slide</span>
+        <span id="currentSlideNum" class="text-indigo-400 font-bold text-sm">1</span>
+        <span class="text-slate-500">/</span>
+        <span class="text-slate-400 font-medium">15</span>
+      </div>
+
+      <button id="nextBtn" onclick="changeSlide(1)" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition flex items-center gap-1.5 shadow-md shadow-indigo-600/30 disabled:opacity-40 disabled:cursor-not-allowed">
+        Next <i class="fa-solid fa-chevron-right text-xs"></i>
+      </button>
+
+      <div class="h-5 w-px bg-slate-800 mx-1"></div>
+
+      <!-- Quick Selector -->
+      <select id="slideSelect" onchange="goToSlide(parseInt(this.value))" class="bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+        <!-- Injected via JS -->
+      </select>
+
+      <button onclick="toggleNotes()" id="notesToggleBtn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-slate-300 transition flex items-center gap-1.5">
+        <i class="fa-regular fa-comment-dots"></i> <span>Speaker Notes</span>
+      </button>
+
+      <a href="index.html" class="px-3 py-1.5 rounded-lg bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30 border border-emerald-500/30 text-xs font-semibold transition flex items-center gap-1.5">
+        <i class="fa-solid fa-laptop-code"></i> Live Prototype
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Presentation Canvas -->
+  <main class="flex-1 flex items-center justify-center p-4 md:p-8">
+    <div class="w-full max-w-6xl">
+      <!-- 16:9 Presentation Frame -->
+      <div id="slideViewport" class="slide-card w-full bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl relative overflow-hidden flex flex-col justify-between p-8 md:p-12 transition-all duration-300">
+        <!-- Content will be injected dynamically -->
+      </div>
+
+      <!-- Speaker Notes Drawer -->
+      <div id="speakerNotesContainer" class="hidden mt-4 p-4 rounded-xl bg-slate-900 border border-slate-800/80 shadow-lg text-slate-300 text-sm">
+        <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+          <div class="flex items-center gap-2 text-indigo-400 font-semibold text-xs uppercase tracking-wider">
+            <i class="fa-solid fa-microphone"></i> Speaker Talking Points & Presenter Notes
+          </div>
+          <span class="text-xs text-slate-500">Use arrow keys (← / →) to navigate</span>
+        </div>
+        <div id="speakerNotesContent" class="text-slate-300 leading-relaxed text-sm">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer Navigation Info -->
+  <footer class="border-t border-slate-800/80 bg-slate-950 px-6 py-2.5 text-xs text-slate-500 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <span>AI-Enabled Recruitment Platform</span>
+      <span class="text-slate-700">•</span>
+      <span>Enterprise Talent Acquisition Solution</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span>Key bindings: <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300 font-mono">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300 font-mono">→</kbd> for slides</span>
+      <span class="text-slate-700">•</span>
+      <span><kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300 font-mono">N</kbd> for notes</span>
+    </div>
+  </footer>
+
+  <script>
+    // 15 Comprehensive Presentation Slides Data
+    const slidesData = [
+      {
+        num: 1,
+        title: "AI-Enabled Smart Talent Acquisition Platform",
+        subtitle: "Automating Resume Screening, Skill Matching, Interview Scheduling & Candidate Tracking",
+        category: "PROJECT OVERVIEW",
+        badge: "Executive Presentation",
+        content: `
+          <div class="flex-1 flex flex-col justify-center items-center text-center max-w-3xl mx-auto space-y-6">
+            <div class="flex flex-wrap items-center justify-center gap-2">
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-slate-700 text-slate-200 text-xs font-semibold tracking-wider">
+                <img src="college_crest_square.png" alt="Easwari Crest" class="w-4 h-4 object-contain inline" />
+                <span>EASWARI ENGINEERING COLLEGE &bull; DEPT OF CSE</span>
+              </div>
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-semibold tracking-wider uppercase">
+                <i class="fa-solid fa-sparkles"></i> AI HR Tech Innovation
+              </div>
+            </div>
+            <h1 class="heading-font text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+              AI-Enabled Recruitment & <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">Talent Intelligence Platform</span>
+            </h1>
+            <p class="text-slate-300 text-lg md:text-xl font-normal max-w-2xl">
+              Transforming the recruitment bottleneck into a high-velocity, fair, and automated hiring pipeline through modern Large Language Models and Semantic Matching.
+            </p>
+            <div class="grid grid-cols-3 gap-6 pt-4 w-full max-w-xl text-left">
+              <div class="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                <div class="text-2xl font-bold text-indigo-400">75%</div>
+                <div class="text-xs text-slate-400 mt-1">Faster Screening Time</div>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                <div class="text-2xl font-bold text-purple-400">10x</div>
+                <div class="text-xs text-slate-400 mt-1">Higher Candidate Throughput</div>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                <div class="text-2xl font-bold text-emerald-400">80%</div>
+                <div class="text-xs text-slate-400 mt-1">Less Scheduling Friction</div>
+              </div>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Slide 1 Opening:</strong><br>
+          "Good morning/afternoon everyone. Today, I am excited to present our AI-Enabled Recruitment Platform. Recruiting has traditionally been one of the most operationally heavy and manual departments in any enterprise. Recruiter burnout, candidate drop-offs, and prolonged hiring cycles cost organizations millions each year. Our platform harnesses modern AI to automate resume parsing, semantic skill ranking, frictionless interview scheduling, and real-time candidate pipeline tracking—reducing screening time by up to 75% while ensuring objective, unbiased talent discovery."
+        `
+      },
+      {
+        num: 2,
+        title: "The Crisis in Modern Recruitment",
+        subtitle: "Why Traditional Talent Acquisition Is Straining HR Teams",
+        category: "PROBLEM STATEMENT",
+        badge: "Industry Analysis",
+        content: `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-full items-center">
+            <div class="p-6 rounded-2xl bg-rose-950/20 border border-rose-900/40 flex flex-col justify-between h-full">
+              <div>
+                <div class="w-12 h-12 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-xl mb-4">
+                  <i class="fa-solid fa-file-excel"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Resume Deluge & Fatigue</h3>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                  Every open corporate role attracts an average of <strong>250+ resumes</strong>. HR spend <strong>15–25 hours per hire</strong> simply scanning CVs manually, leading to severe cognitive fatigue and missed top candidates.
+                </p>
+              </div>
+              <div class="mt-4 pt-4 border-t border-rose-900/40 text-rose-300 font-semibold text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-clock"></i> Recruiter reviews resume in only 6-7 seconds
+              </div>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-amber-950/20 border border-amber-900/40 flex flex-col justify-between h-full">
+              <div>
+                <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl mb-4">
+                  <i class="fa-solid fa-calendar-xmark"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Scheduling Ping-Pong</h3>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                  Coordinating availability between hiring managers and applicants takes an average of <strong>4.2 emails and 3 to 5 days</strong>. High-demand candidates accept competing offers while waiting for interview slots.
+                </p>
+              </div>
+              <div class="mt-4 pt-4 border-t border-amber-900/40 text-amber-300 font-semibold text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-triangle-exclamation"></i> 57% candidates lose interest if delayed
+              </div>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-purple-950/20 border border-purple-900/40 flex flex-col justify-between h-full">
+              <div>
+                <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl mb-4">
+                  <i class="fa-solid fa-filter-circle-xmark"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Keyword-Matching Flaws</h3>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                  Legacy ATS tools rely on rigid keyword searches. If a candidate writes <em>"distributed data pipelines"</em> instead of <em>"Apache Spark"</em>, legacy ATS filters reject them, causing devastating false negatives.
+                </p>
+              </div>
+              <div class="mt-4 pt-4 border-t border-purple-900/40 text-purple-300 font-semibold text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-ban"></i> 70%+ qualified talent filtered out by dumb ATS
+              </div>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "Let's look at the harsh reality HR teams face today. A single tech job posting attracts over 250 applications. Recruiters spend up to 25 hours per position just clicking through PDFs. Because of time pressure, human screeners average only 6 seconds per resume. Second, scheduling is a multi-day email ping-pong game that costs companies their best candidates. Third, legacy ATS keyword filters are rigid and dumb: they filter candidates by literal keyword matches rather than semantic competencies. Our platform addresses these structural flaws directly."
+        `
+      },
+      {
+        num: 3,
+        title: "The Business Cost of Inefficient Hiring",
+        subtitle: "Quantifying the Financial & Operational Toll on Organizations",
+        category: "PROBLEM STATEMENT",
+        badge: "Business Impact",
+        content: `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-4">
+              <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 flex items-start gap-4">
+                <div class="text-3xl font-extrabold text-rose-400 min-w-[70px]">44 Days</div>
+                <div>
+                  <h4 class="font-bold text-white text-base">Average Time-to-Hire</h4>
+                  <p class="text-slate-400 text-xs mt-1">Open technical vacancies remain vacant for over 6 weeks, stalling product roadmaps and overloading existing engineering teams.</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 flex items-start gap-4">
+                <div class="text-3xl font-extrabold text-amber-400 min-w-[70px]">$4,700</div>
+                <div>
+                  <h4 class="font-bold text-white text-base">Average Cost-per-Hire</h4>
+                  <p class="text-slate-400 text-xs mt-1">Driven by recruiter agency fees, job board boosts, overtime coordination, and lost productivity during vacancy periods.</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 flex items-start gap-4">
+                <div class="text-3xl font-extrabold text-indigo-400 min-w-[70px]">62%</div>
+                <div>
+                  <h4 class="font-bold text-white text-base">Candidate Ghosting Rate</h4>
+                  <p class="text-slate-400 text-xs mt-1">Candidates drop off due to slow status feedback, delayed interview bookings, and impersonal communication.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-indigo-950/40 border border-indigo-900/40 flex flex-col justify-center">
+              <h3 class="text-xl font-bold text-white mb-3">Where Does a Recruiter's Week Go?</h3>
+              <div class="space-y-3">
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span class="text-slate-300">Manual Resume Screening</span>
+                    <span class="text-indigo-400">38% (15.2 hrs/wk)</span>
+                  </div>
+                  <div class="w-full bg-slate-800 rounded-full h-2.5">
+                    <div class="bg-indigo-500 h-2.5 rounded-full" style="width: 38%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span class="text-slate-300">Emailing & Scheduling Interviews</span>
+                    <span class="text-purple-400">22% (8.8 hrs/wk)</span>
+                  </div>
+                  <div class="w-full bg-slate-800 rounded-full h-2.5">
+                    <div class="bg-purple-500 h-2.5 rounded-full" style="width: 22%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span class="text-slate-300">ATS Admin & Data Entry</span>
+                    <span class="text-amber-400">18% (7.2 hrs/wk)</span>
+                  </div>
+                  <div class="w-full bg-slate-800 rounded-full h-2.5">
+                    <div class="bg-amber-500 h-2.5 rounded-full" style="width: 18%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span class="text-emerald-300">Actual Interviewing & Talent Engagement</span>
+                    <span class="text-emerald-400">22% (8.8 hrs/wk)</span>
+                  </div>
+                  <div class="w-full bg-slate-800 rounded-full h-2.5">
+                    <div class="bg-emerald-500 h-2.5 rounded-full" style="width: 22%"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="text-xs text-slate-400 mt-4 italic bg-slate-900/60 p-2.5 rounded-lg border border-slate-800">
+                Notice: Less than a quarter of a recruiter's time is actually spent talking to candidates! The rest is administrative toil.
+              </p>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "Look at the time allocation breakdown on the right: almost 80% of a recruiter's work week is spent on low-value mechanical tasks: reading resumes, playing email tennis to schedule calendar invites, and manually updating ATS spreadsheets. Only 22% is spent actually interviewing talent and building human relationships. This inflates time-to-hire to 44 days and cost-per-hire to nearly $5,000. Automating this administrative friction allows HR to operate 4x faster."
+        `
+      },
+      {
+        num: 4,
+        title: "The Solution: AI-Powered Talent Intelligence",
+        subtitle: "A Closed-Loop System from Job Requisition to Final Offer",
+        category: "SOLUTION OVERVIEW",
+        badge: "Our Vision",
+        content: `
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 h-full items-stretch">
+            <div class="p-5 rounded-xl bg-slate-800/60 border border-slate-700/80 flex flex-col justify-between hover:border-indigo-500/50 transition">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold mb-3">
+                  01
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">Automated Resume Parsing</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Extracts structured entities (skills, seniority, education, tenure) from PDF/DOCX using NLP & LLM parser without losing context.
+                </p>
+              </div>
+              <div class="text-[11px] font-semibold text-indigo-400 mt-3 pt-2 border-t border-slate-700/50">
+                Zero manual data entry
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/60 border border-slate-700/80 flex flex-col justify-between hover:border-purple-500/50 transition">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold mb-3">
+                  02
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">Semantic Skill Matching</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Compares candidate embeddings against JD requirements. Recognizes semantic equivalence (e.g. FastAPI &approx; Flask, GCP &approx; AWS).
+                </p>
+              </div>
+              <div class="text-[11px] font-semibold text-purple-400 mt-3 pt-2 border-t border-slate-700/50">
+                Eliminates keyword rejection
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/60 border border-slate-700/80 flex flex-col justify-between hover:border-pink-500/50 transition">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold mb-3">
+                  03
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">Autonomous Scheduling</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Syncs with interviewer Google/Outlook calendars, auto-suggests slots, generates video links, and sends calendar invites seamlessly.
+                </p>
+              </div>
+              <div class="text-[11px] font-semibold text-pink-400 mt-3 pt-2 border-t border-slate-700/50">
+                Instant candidate bookings
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/60 border border-slate-700/80 flex flex-col justify-between hover:border-emerald-500/50 transition">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold mb-3">
+                  04
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">End-to-End ATS Pipeline</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Live Kanban tracking, automated stage transitions, automated candidate nudges, and transparent audit trails for every hiring action.
+                </p>
+              </div>
+              <div class="text-[11px] font-semibold text-emerald-400 mt-3 pt-2 border-t border-slate-700/50">
+                Unified source of truth
+              </div>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "Here is our unified solution: We connect the four broken steps of the recruiting funnel into one cohesive, intelligent workflow. First, unstructured resumes are parsed automatically into rich profiles. Second, our semantic engine computes true contextual fit rather than simplistic keyword counts. Third, qualified candidates are immediately routed into self-serve interview scheduling without human delays. Fourth, the recruiter manages the entire lifecycle in an intuitive ATS Kanban dashboard."
+        `
+      },
+      {
+        num: 5,
+        title: "Platform System Architecture",
+        subtitle: "Modern Microservices, Vector Database & LLM Inference Pipeline",
+        category: "TECHNICAL ARCHITECTURE",
+        badge: "Under the Hood",
+        content: `
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 h-full flex flex-col justify-between">
+            <div class="grid grid-cols-4 gap-3 text-center">
+              <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
+                <span class="text-xs text-indigo-400 font-semibold uppercase tracking-wider block mb-1">Layer 1</span>
+                <h5 class="text-white font-bold text-sm">Data Ingestion</h5>
+                <p class="text-[11px] text-slate-400 mt-1">Multi-format resume ingest (PDF, DOCX, LinkedIn). OCR parser + PII Sanitizer.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
+                <span class="text-xs text-purple-400 font-semibold uppercase tracking-wider block mb-1">Layer 2</span>
+                <h5 class="text-white font-bold text-sm">Embeddings & NLP</h5>
+                <p class="text-[11px] text-slate-400 mt-1">Text-embedding-3 / SentenceTransformers. Vector DB (Pinecone/Milvus/Qdrant).</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
+                <span class="text-xs text-pink-400 font-semibold uppercase tracking-wider block mb-1">Layer 3</span>
+                <h5 class="text-white font-bold text-sm">AI Matching Engine</h5>
+                <p class="text-[11px] text-slate-400 mt-1">Cosine Similarity + LLM contextual evaluator for gap analysis & scoring.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
+                <span class="text-xs text-emerald-400 font-semibold uppercase tracking-wider block mb-1">Layer 4</span>
+                <h5 class="text-white font-bold text-sm">Workflows & UI</h5>
+                <p class="text-[11px] text-slate-400 mt-1">Calendar API connectors, Webhook triggers, Recruiter ATS Dashboard.</p>
+              </div>
+            </div>
+
+            <div class="mt-4 p-4 rounded-xl bg-slate-950/70 border border-slate-800 grid grid-cols-3 gap-4">
+              <div>
+                <span class="text-xs font-bold text-indigo-300 block mb-1.5 flex items-center gap-1.5">
+                  <i class="fa-solid fa-microchip"></i> AI / NLP Layer
+                </span>
+                <ul class="text-xs text-slate-300 space-y-1">
+                  <li>• Gemini 1.5 Pro / GPT-4o for Deep Reasoning</li>
+                  <li>• spaCy & PyPDF for NER & Tokenization</li>
+                  <li>• Vector Cosine Distance for fast candidate indexing</li>
+                </ul>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-purple-300 block mb-1.5 flex items-center gap-1.5">
+                  <i class="fa-solid fa-server"></i> Backend & Storage
+                </span>
+                <ul class="text-xs text-slate-300 space-y-1">
+                  <li>• FastAPI / Node.js High-Throughput REST APIs</li>
+                  <li>• PostgreSQL for Candidate & Job metadata</li>
+                  <li>• Redis for Task Queue & Scheduling locks</li>
+                </ul>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-emerald-300 block mb-1.5 flex items-center gap-1.5">
+                  <i class="fa-solid fa-shield-halved"></i> Security & Fair Hiring
+                </span>
+                <ul class="text-xs text-slate-300 space-y-1">
+                  <li>• Automated Blind Screening (PII Masking)</li>
+                  <li>• SOC2 Type II & GDPR compliant storage</li>
+                  <li>• Explainable scoring breakdown</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "This slide outlines our technical architecture. Notice the four layered tiers. In Layer 1, resumes pass through an ingestion gateway that extracts structured data and strips PII like photo, age, gender, and home address for fair blind screening. Layer 2 converts both the candidate's journey and the job requisition into high-dimensional vector embeddings. Layer 3 evaluates cosine similarity and calls an LLM reasoner to synthesize gap analysis. Finally, Layer 4 powers the real-time recruiter frontend and calendar integration engines."
+        `
+      },
+      {
+        num: 6,
+        title: "Feature 1: Intelligent Resume Parsing & Extraction",
+        subtitle: "Converting Unstructured PDFs into High-Quality Structured Talent Profiles",
+        category: "CORE CAPABILITIES",
+        badge: "Parsing Engine",
+        content: `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-full items-center">
+            <div class="space-y-4">
+              <div class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
+                <h4 class="font-bold text-white text-sm flex items-center gap-2">
+                  <i class="fa-solid fa-wand-magic-sparkles text-indigo-400"></i> Multi-Layout OCR & Parser
+                </h4>
+                <p class="text-xs text-slate-400 mt-1">Handles multi-column designs, tables, creative portfolio formats, and graphic CVs without text clipping.</p>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
+                <h4 class="font-bold text-white text-sm flex items-center gap-2">
+                  <i class="fa-solid fa-tags text-purple-400"></i> Named Entity Recognition (NER)
+                </h4>
+                <p class="text-xs text-slate-400 mt-1">Identifies technical skills, soft skills, certifications, university tiers, companies, and roles automatically.</p>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
+                <h4 class="font-bold text-white text-sm flex items-center gap-2">
+                  <i class="fa-solid fa-chart-line text-emerald-400"></i> Career Trajectory & Tenure Analysis
+                </h4>
+                <p class="text-xs text-slate-400 mt-1">Calculates total years of experience, average tenure per employer, progression speed, and gap justifications.</p>
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs">
+              <div class="flex items-center justify-between pb-2 mb-3 border-b border-slate-800 text-slate-400">
+                <span>// Parsed Candidate JSON Output</span>
+                <span class="text-emerald-400 font-bold">Status: 200 OK</span>
+              </div>
+              <pre class="text-slate-300 leading-relaxed overflow-x-auto text-[11px]">
+{
+  "candidate_id": "cand_8921",
+  "seniority_level": "Senior (6.5 yrs)",
+  "primary_domains": ["Backend", "Cloud Infrastructure"],
+  "verified_skills": [
+    {"name": "Python", "depth": "Expert", "recency": "Current"},
+    {"name": "FastAPI", "depth": "Advanced", "recency": "2024"},
+    {"name": "PostgreSQL", "depth": "Advanced", "recency": "Current"},
+    {"name": "Kubernetes", "depth": "Intermediate", "recency": "2023"}
+  ],
+  "job_stability_score": 0.92,
+  "career_trajectory": "Upward Seniority Progression"
+}</pre>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "The first core pillar is our parser. Traditional parsers break when faced with two-column resumes, unusual font glyphs, or creative design templates. Our engine combines visual layout OCR with transformer-based Named Entity Recognition. It extracts not only raw skill names, but recency, depth of experience, and career trajectory. As you can see in the JSON payload, it produces clean, normalized profiles ready for instant comparison."
+        `
+      },
+      {
+        num: 7,
+        title: "Feature 2: Semantic Skill Matching & Gap Analysis",
+        subtitle: "Beyond Dumb Keyword Counting: Understanding Real Engineering Competence",
+        category: "CORE CAPABILITIES",
+        badge: "AI Matching",
+        content: `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 h-full items-stretch">
+            <div class="p-5 rounded-xl bg-slate-800/70 border border-slate-700/80 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider block mb-2">Capability A</span>
+                <h4 class="font-bold text-white text-base mb-2">Contextual Synonymy</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  The model knows that a candidate with <em>"Golang, gRPC, microservices"</em> can rapidly excel in a role requiring <em>"Java Spring Boot APIs"</em> due to architectural equivalence.
+                </p>
+              </div>
+              <div class="p-2.5 rounded bg-slate-900/80 border border-slate-800 text-[11px] text-indigo-300 mt-4">
+                &check; Contextual transferability scored
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/70 border border-slate-700/80 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-purple-400 uppercase tracking-wider block mb-2">Capability B</span>
+                <h4 class="font-bold text-white text-base mb-2">Skill Gap Detection</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Explicitly highlights missing requirements (e.g. <em>"Lacks Kafka streaming experience; has RabbitMQ only"</em>), giving recruiters immediate clarity before interviewing.
+                </p>
+              </div>
+              <div class="p-2.5 rounded bg-slate-900/80 border border-slate-800 text-[11px] text-purple-300 mt-4">
+                &check; Actionable gap alerts for recruiters
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/70 border border-slate-700/80 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider block mb-2">Capability C</span>
+                <h4 class="font-bold text-white text-base mb-2">Targeted Question Generator</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Generates customized behavioral and technical interview questions specifically addressing the detected gaps in the candidate's resume vs the JD.
+                </p>
+              </div>
+              <div class="p-2.5 rounded bg-slate-900/80 border border-slate-800 text-[11px] text-emerald-300 mt-4">
+                &check; AI-generated interviewer cheat-sheets
+              </div>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "The second capability is our semantic matching engine. Most current software either accepts or rejects candidates based on literal string matching. If a candidate worked on GCP instead of AWS, legacy systems penalize them. Our AI evaluates conceptual equivalence: cloud fundamentals, distributed system principles, and design patterns. More importantly, it surfaces what is missing and even generates custom interview questions so the hiring manager knows exactly what to ask."
+        `
+      },
+      {
+        num: 8,
+        title: "Feature 3: Transparent AI Candidate Ranking",
+        subtitle: "Defensible, Explainable Scoring Instead of Black-Box Decisions",
+        category: "CORE CAPABILITIES",
+        badge: "Scoring Matrix",
+        content: `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-full items-center">
+            <div class="space-y-3">
+              <h4 class="font-bold text-white text-base mb-1">Composite Match Algorithm Formula:</h4>
+              <div class="p-3.5 rounded-xl bg-slate-950 border border-indigo-900/50 font-mono text-xs text-indigo-300">
+                Score = (0.45 &times; Skills) + (0.30 &times; Experience) + (0.15 &times; Domain) + (0.10 &times; Education)
+              </div>
+              <div class="space-y-2 text-xs text-slate-300">
+                <div class="flex items-center justify-between p-2 rounded bg-slate-800/60">
+                  <span><strong>Skills Fit (45%):</strong> Mandatory core tech stack match</span>
+                  <span class="text-indigo-400 font-bold">Weighted High</span>
+                </div>
+                <div class="flex items-center justify-between p-2 rounded bg-slate-800/60">
+                  <span><strong>Experience Fit (30%):</strong> Seniority level, company stage match</span>
+                  <span class="text-purple-400 font-bold">Weighted Med</span>
+                </div>
+                <div class="flex items-center justify-between p-2 rounded bg-slate-800/60">
+                  <span><strong>Domain Relevance (15%):</strong> FinTech, HealthTech, SaaS alignment</span>
+                  <span class="text-pink-400 font-bold">Contextual</span>
+                </div>
+                <div class="flex items-center justify-between p-2 rounded bg-slate-800/60">
+                  <span><strong>Education & Credentials (10%):</strong> Degrees, Cloud certs</span>
+                  <span class="text-emerald-400 font-bold">Flexible</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/90 border border-slate-700 shadow-xl">
+              <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-700">
+                <div>
+                  <h4 class="text-white font-bold text-sm">Sarah Jenkins</h4>
+                  <p class="text-slate-400 text-xs">Senior Backend Engineer</p>
+                </div>
+                <div class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-sm border border-emerald-500/40">
+                  94% Match
+                </div>
+              </div>
+              <div class="space-y-2 text-xs">
+                <div>
+                  <div class="flex justify-between text-[11px] mb-1">
+                    <span class="text-slate-300">Skill Alignment</span>
+                    <span class="text-emerald-400 font-semibold">96%</span>
+                  </div>
+                  <div class="w-full bg-slate-700 rounded-full h-1.5"><div class="bg-emerald-500 h-1.5 rounded-full" style="width: 96%"></div></div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-[11px] mb-1">
+                    <span class="text-slate-300">Experience Seniority</span>
+                    <span class="text-indigo-400 font-semibold">90%</span>
+                  </div>
+                  <div class="w-full bg-slate-700 rounded-full h-1.5"><div class="bg-indigo-500 h-1.5 rounded-full" style="width: 90%"></div></div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-[11px] mb-1">
+                    <span class="text-slate-300">Domain Alignment (SaaS)</span>
+                    <span class="text-purple-400 font-semibold">92%</span>
+                  </div>
+                  <div class="w-full bg-slate-700 rounded-full h-1.5"><div class="bg-purple-500 h-1.5 rounded-full" style="width: 92%"></div></div>
+                </div>
+              </div>
+              <div class="mt-3 p-2 rounded bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300">
+                <span class="text-amber-400 font-semibold">&bull; AI Note:</span> Strong system design track record. Candidate has 7 years with high-scale microservices; slightly short on Kubernetes production clustering.
+              </div>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "One of the biggest fears HR teams have with AI is the black box problem: why did the AI recommend candidate A over candidate B? Our platform offers total explainability. The ranking score is a multi-dimensional weighted composite: skills fit, seniority calibration, domain experience, and credentials. Recruiter teams can adjust weights per job requisition, and every score is accompanied by an itemized rationale."
+        `
+      },
+      {
+        num: 9,
+        title: "Feature 4: Autonomous Interview Scheduling",
+        subtitle: "Zero-Latency Calendar Synchronization & Candidate Self-Selection",
+        category: "CORE CAPABILITIES",
+        badge: "Smart Automation",
+        content: `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-full items-stretch">
+            <div class="p-5 rounded-xl bg-slate-800/70 border border-slate-700 flex flex-col justify-between">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg mb-3">
+                  <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">Calendar Orchestration</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Real-time two-way synchronization with Google Workspace and Microsoft 365. Detects panel availability, buffer times, and cross-timezone conflicts.
+                </p>
+              </div>
+              <div class="text-[11px] text-indigo-400 font-semibold mt-3 pt-2 border-t border-slate-700">
+                Multi-interviewer round coordination
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/70 border border-slate-700 flex flex-col justify-between">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg mb-3">
+                  <i class="fa-solid fa-envelope-open-text"></i>
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">Dynamic Invitation Links</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Top-ranked candidates instantly receive a personalized scheduling link via email or SMS. They select their preferred slot in under 30 seconds.
+                </p>
+              </div>
+              <div class="text-[11px] text-purple-400 font-semibold mt-3 pt-2 border-t border-slate-700">
+                Eliminates 3-5 days of back-and-forth
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/70 border border-slate-700 flex flex-col justify-between">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center text-lg mb-3">
+                  <i class="fa-solid fa-video"></i>
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">Automated Event Genesis</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Creates Google Meet/Zoom video bridge, attaches candidate resume summary, sends interviewer rubric notes, and triggers reminder pings.
+                </p>
+              </div>
+              <div class="text-[11px] text-pink-400 font-semibold mt-3 pt-2 border-t border-slate-700">
+                Zero candidate no-show rate
+              </div>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "Now let's talk about scheduling. This is historically where deals die. When a hiring manager likes a resume, it usually sits in an inbox for two days before an invite goes out. With our platform, as soon as a candidate hits the qualification threshold, an automated reservation trigger can dispatch a dynamic booking link. The system queries interviewer free/busy slots across Google Calendar or Outlook, candidate picks a time, Zoom links are generated, and calendar invites are sent instantly."
+        `
+      },
+      {
+        num: 10,
+        title: "Feature 5: End-to-End ATS & Pipeline Management",
+        subtitle: "Visual Kanban, Stage Automation, and Seamless Recruiter Collaboration",
+        category: "CORE CAPABILITIES",
+        badge: "Recruiter Command Center",
+        content: `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-full items-center">
+            <div class="space-y-3.5">
+              <div class="flex items-start gap-3">
+                <div class="w-7 h-7 rounded bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">1</div>
+                <div>
+                  <h5 class="text-sm font-bold text-white">Full-Funnel Kanban Visibility</h5>
+                  <p class="text-xs text-slate-400">Track candidates from Sourced &rarr; AI Screened &rarr; Technical Round &rarr; Executive Review &rarr; Offer.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-7 h-7 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">2</div>
+                <div>
+                  <h5 class="text-sm font-bold text-white">Automated Batch Actions</h5>
+                  <p class="text-xs text-slate-400">Advance the top 10 ranked candidates with one click; batch reject unqualified applicants with respectful, personalized AI feedback.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-7 h-7 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">3</div>
+                <div>
+                  <h5 class="text-sm font-bold text-white">Hiring Team Collaboration & Scorecards</h5>
+                  <p class="text-xs text-slate-400">Centralized interviewer feedback, shared interview scorecards, and historical candidate audit trails.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 grid grid-cols-3 gap-2 text-xs">
+              <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+                <div class="font-bold text-slate-400 mb-2 flex items-center justify-between">
+                  <span>Applied (14)</span>
+                  <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                </div>
+                <div class="p-2 rounded bg-slate-800/80 mb-2 border border-slate-700/60">
+                  <div class="font-semibold text-white text-[11px]">Alex Rivers</div>
+                  <div class="text-[10px] text-slate-400">Score: 88%</div>
+                </div>
+                <div class="p-2 rounded bg-slate-800/80 border border-slate-700/60">
+                  <div class="font-semibold text-white text-[11px]">David Kim</div>
+                  <div class="text-[10px] text-slate-400">Score: 92%</div>
+                </div>
+              </div>
+
+              <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+                <div class="font-bold text-indigo-400 mb-2 flex items-center justify-between">
+                  <span>Interview (6)</span>
+                  <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+                </div>
+                <div class="p-2 rounded bg-indigo-950/40 border border-indigo-800/50">
+                  <div class="font-semibold text-white text-[11px]">Elena Rostova</div>
+                  <div class="text-[10px] text-indigo-300">Fri, 2:00 PM</div>
+                </div>
+              </div>
+
+              <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+                <div class="font-bold text-emerald-400 mb-2 flex items-center justify-between">
+                  <span>Offer Stage (2)</span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                </div>
+                <div class="p-2 rounded bg-emerald-950/40 border border-emerald-800/50">
+                  <div class="font-semibold text-white text-[11px]">Marcus Vance</div>
+                  <div class="text-[10px] text-emerald-300">Offer Sent ($160k)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "The fifth component brings everything together in an intuitive Applicant Tracking System. Recruiters do not need to switch between five different tools. The interactive Kanban gives instantaneous status visibility, enables drag-and-drop pipeline updates, and automatically synchronizes candidate notifications. When a candidate moves to 'Offer Stage', the team is notified via Slack or email instantly."
+        `
+      },
+      {
+        num: 11,
+        title: "Ethical AI, Bias Mitigation & Compliance",
+        subtitle: "Ensuring Fairness, Diversity, and Global Regulatory Standards",
+        category: "GOVERNANCE & TRUST",
+        badge: "Responsible AI",
+        content: `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-full items-stretch">
+            <div class="p-5 rounded-xl bg-slate-800/70 border border-slate-700 flex flex-col justify-between">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-3">
+                  <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">Automated Blind Screening</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Redacts demographic indicators (name, gender, photo, age, zip code, graduation year) prior to algorithmic scoring to eliminate unconscious human & AI bias.
+                </p>
+              </div>
+              <div class="text-[11px] text-emerald-400 font-semibold mt-3 pt-2 border-t border-slate-700">
+                Merit & skill-focused evaluation
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/70 border border-slate-700 flex flex-col justify-between">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg mb-3">
+                  <i class="fa-solid fa-scale-balanced"></i>
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">EEOC & NYC Local Law 144</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Undergoes independent bias audits to ensure selection rates between protected classes adhere to the 4/5ths (80%) disparate impact rule.
+                </p>
+              </div>
+              <div class="text-[11px] text-indigo-400 font-semibold mt-3 pt-2 border-t border-slate-700">
+                Legally vetted AI hiring tools
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/70 border border-slate-700 flex flex-col justify-between">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg mb-3">
+                  <i class="fa-solid fa-lock"></i>
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">GDPR & Data Sovereignty</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Explicit candidate consent mechanisms, Right-to-be-Forgotten data purge routines, and zero data training leaks into external public models.
+                </p>
+              </div>
+              <div class="text-[11px] text-purple-400 font-semibold mt-3 pt-2 border-t border-slate-700">
+                Enterprise security standards
+              </div>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "AI in recruitment cannot succeed without rigorous ethics and governance. We take bias mitigation seriously: our blind screening filter redacts names, photos, gender identifiers, and graduation years before ranking. This ensures candidates are judged solely on demonstrated engineering competencies. Furthermore, our platform is architected to be compliant with NYC Local Law 144 on Automated Employment Decision Tools, the EEOC standards, and European GDPR data protection laws."
+        `
+      },
+      {
+        num: 12,
+        title: "User Experience: Before vs After",
+        subtitle: "How the Platform Transforms Both Recruiter and Candidate Journeys",
+        category: "TRANSFORMATION",
+        badge: "User Journey",
+        content: `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-full items-stretch">
+            <div class="p-5 rounded-xl bg-rose-950/20 border border-rose-900/50 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-rose-400 uppercase tracking-wider block mb-2">Legacy Workflow (Manual)</span>
+                <h4 class="font-bold text-white text-lg mb-4">Slow, Fragmented, Opaque</h4>
+                <ul class="space-y-3 text-xs text-slate-300">
+                  <li class="flex items-start gap-2">
+                    <span class="text-rose-400 font-bold">&times;</span>
+                    <span>Recruiter manually downloads 250 PDFs from disparate portals.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-rose-400 font-bold">&times;</span>
+                    <span>Skims each resume for 6 seconds; high error rate.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-rose-400 font-bold">&times;</span>
+                    <span>Exchanges 5+ emails across 4 days to pin down a 30-min interview.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-rose-400 font-bold">&times;</span>
+                    <span>Rejected candidates receive silence; company brand suffers.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="p-3 rounded-lg bg-rose-900/20 text-rose-300 text-xs font-semibold mt-4">
+                Cycle time: 35–45 days per position
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-emerald-950/20 border border-emerald-900/50 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider block mb-2">TalentAI Workflow (Automated)</span>
+                <h4 class="font-bold text-white text-lg mb-4">Instant, Intelligent, Delightful</h4>
+                <ul class="space-y-3 text-xs text-slate-300">
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-400 font-bold">&check;</span>
+                    <span>All applications parsed and scored in real-time as they arrive.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-400 font-bold">&check;</span>
+                    <span>Recruiter opens dashboard and immediately sees top 5% ranked candidates.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-400 font-bold">&check;</span>
+                    <span>Top candidates self-book interview in 60 seconds via calendar sync.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-400 font-bold">&check;</span>
+                    <span>Automated, respectful feedback sent to every applicant.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="p-3 rounded-lg bg-emerald-900/20 text-emerald-300 text-xs font-semibold mt-4">
+                Cycle time: 10–14 days per position
+              </div>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "This slide contrasts the recruiter and candidate experience before and after. Notice that not only does the company save 20+ days per hiring cycle, but the candidate's brand experience is elevated dramatically. Instead of candidates submitting their resumes into a black hole and being ghosted for weeks, top applicants are engaged and scheduled within minutes of applying. Rejected applicants receive polite, respectful updates, preserving employer brand equity."
+        `
+      },
+      {
+        num: 13,
+        title: "Measurable ROI & Business Impact",
+        subtitle: "Tangible Cost Savings and Productivity Multipliers",
+        category: "BUSINESS VALUE",
+        badge: "ROI Projections",
+        content: `
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 h-full items-stretch">
+            <div class="p-5 rounded-xl bg-slate-800/80 border border-slate-700 flex flex-col justify-between">
+              <div>
+                <div class="text-3xl font-extrabold text-indigo-400 mb-2">75%</div>
+                <h4 class="font-bold text-white text-sm mb-1">Screening Time Reduction</h4>
+                <p class="text-xs text-slate-400">Recruiters drop from 20 hours/week of manual resume reading to under 4 hours.</p>
+              </div>
+              <div class="text-[11px] text-slate-500 mt-3 pt-2 border-t border-slate-700">16 hrs/recruiter saved weekly</div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/80 border border-slate-700 flex flex-col justify-between">
+              <div>
+                <div class="text-3xl font-extrabold text-purple-400 mb-2">60%</div>
+                <h4 class="font-bold text-white text-sm mb-1">Faster Time-to-Hire</h4>
+                <p class="text-xs text-slate-400">Average recruitment cycle accelerates from 44 days down to 14–18 days.</p>
+              </div>
+              <div class="text-[11px] text-slate-500 mt-3 pt-2 border-t border-slate-700">Eliminates vacancy backlog</div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/80 border border-slate-700 flex flex-col justify-between">
+              <div>
+                <div class="text-3xl font-extrabold text-emerald-400 mb-2">$145k+</div>
+                <h4 class="font-bold text-white text-sm mb-1">Annual Savings</h4>
+                <p class="text-xs text-slate-400">For a mid-sized firm making 50 hires/yr through reduced agency and recruiter overhead.</p>
+              </div>
+              <div class="text-[11px] text-slate-500 mt-3 pt-2 border-t border-slate-700">Immediate ROI in Month 2</div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/80 border border-slate-700 flex flex-col justify-between">
+              <div>
+                <div class="text-3xl font-extrabold text-pink-400 mb-2">3.2x</div>
+                <h4 class="font-bold text-white text-sm mb-1">Higher Conversion</h4>
+                <p class="text-xs text-slate-400">Candidates who interview within 48h of applying accept offers at 3.2x higher rates.</p>
+              </div>
+              <div class="text-[11px] text-slate-500 mt-3 pt-2 border-t border-slate-700">Wins the top 5% talent</div>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "Let's quantify the financial ROI. For a mid-sized organization hiring 50 engineers and business roles a year, reducing recruiter manual screening hours and slashing third-party agency dependencies saves upwards of $145,000 annually. More importantly, top engineering talent gets multiple offers within a week. Reaching them in 48 hours boosts our offer acceptance rate by 3.2 times, keeping critical projects on schedule."
+        `
+      },
+      {
+        num: 14,
+        title: "Product Roadmap & Future Horizons",
+        subtitle: "Next Phases of AI-Driven Talent Acquisition Evolution",
+        category: "ROADMAP",
+        badge: "Future Vision",
+        content: `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 h-full items-stretch">
+            <div class="p-5 rounded-xl bg-slate-800/70 border border-indigo-500/40 flex flex-col justify-between">
+              <div>
+                <div class="inline-block px-2.5 py-1 rounded bg-indigo-500/20 text-indigo-400 font-bold text-xs mb-3">
+                  Phase 1 (Current / Prototype)
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">Core Automation Engine</h4>
+                <ul class="text-xs text-slate-300 space-y-1.5">
+                  <li>• NLP / LLM Resume Parsing</li>
+                  <li>• Semantic Skill Match Scoring</li>
+                  <li>• Interactive Kanban ATS</li>
+                  <li>• Automated Calendar Sync Engine</li>
+                  <li>• Real-time Test Sandbox</li>
+                </ul>
+              </div>
+              <div class="text-xs text-indigo-400 font-semibold mt-4">Delivered & Fully Functional</div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/70 border border-purple-500/40 flex flex-col justify-between">
+              <div>
+                <div class="inline-block px-2.5 py-1 rounded bg-purple-500/20 text-purple-400 font-bold text-xs mb-3">
+                  Phase 2 (Q2 2026)
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">Asynchronous Video & Voice</h4>
+                <ul class="text-xs text-slate-300 space-y-1.5">
+                  <li>• AI One-Way Video Screener</li>
+                  <li>• Speech-to-Text Transcription</li>
+                  <li>• Candidate Sentiment & Confidence cues</li>
+                  <li>• Automatic ATS integration with Workday & Greenhouse</li>
+                </ul>
+              </div>
+              <div class="text-xs text-purple-400 font-semibold mt-4">In Development</div>
+            </div>
+
+            <div class="p-5 rounded-xl bg-slate-800/70 border border-emerald-500/40 flex flex-col justify-between">
+              <div>
+                <div class="inline-block px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-bold text-xs mb-3">
+                  Phase 3 (Q4 2026)
+                </div>
+                <h4 class="font-bold text-white text-base mb-2">Autonomous Talent Headhunter</h4>
+                <ul class="text-xs text-slate-300 space-y-1.5">
+                  <li>• Proactive GitHub & LinkedIn sourcing</li>
+                  <li>• AI Personalized Sourcing Emails</li>
+                  <li>• Market Salary Benchmarking & Forecasting</li>
+                  <li>• Predictive Retention & Churn Analytics</li>
+                </ul>
+              </div>
+              <div class="text-xs text-emerald-400 font-semibold mt-4">Research & Strategic Plan</div>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Talking Points:</strong><br>
+          "Our development roadmap is structured in three logical phases. Phase 1 is our core platform, which is already live and demonstrable today in our interactive prototype. Phase 2 introduces asynchronous AI video screening and bidirectional connectors into legacy enterprise systems like Workday and Greenhouse. Phase 3 moves into autonomous talent sourcing, where AI agents proactively scan public technical contributions on GitHub to source passive candidates before they even hit the job market."
+        `
+      },
+      {
+        num: 15,
+        title: "Conclusion & Interactive Prototype Demonstration",
+        subtitle: "The Future of Hiring is Intelligent, Fair, and High-Velocity",
+        category: "CONCLUSION",
+        badge: "Call to Action",
+        content: `
+          <div class="flex-1 flex flex-col justify-center items-center text-center max-w-3xl mx-auto space-y-6">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-3xl text-white shadow-xl shadow-indigo-500/30">
+              <i class="fa-solid fa-rocket"></i>
+            </div>
+            <h2 class="heading-font text-3xl md:text-4xl font-extrabold text-white">
+              Empowering Human Recruiters with AI Superpowers
+            </h2>
+            <p class="text-slate-300 text-base md:text-lg max-w-2xl leading-relaxed">
+              By removing the administrative burden of parsing, ranking, and scheduling, TalentAI allows HR teams to focus on what humans do best: building meaningful relationships and inspiring top candidates to join your mission.
+            </p>
+            <div class="flex items-center gap-4 pt-2">
+              <a href="index.html" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition flex items-center gap-2">
+                <i class="fa-solid fa-play"></i> Launch Interactive Prototype
+              </a>
+              <button onclick="goToSlide(1)" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold text-sm transition flex items-center gap-2">
+                <i class="fa-solid fa-rotate-left"></i> Replay Deck
+              </button>
+            </div>
+            <div class="pt-4 text-xs text-slate-500 flex items-center gap-6">
+              <span>&check; Zero Dependencies</span>
+              <span>&bull;</span>
+              <span>&check; Production-Ready Architecture</span>
+              <span>&bull;</span>
+              <span>&check; Built for Scale</span>
+            </div>
+          </div>
+        `,
+        speakerNotes: `
+          <strong>Closing Remarks:</strong><br>
+          "To summarize: AI in recruitment is not about replacing human decision-makers; it is about giving recruiters superpowers. It eliminates 20 hours of repetitive data entry each week and puts human empathy, culture matching, and talent negotiation back at the heart of recruitment. I invite you now to explore our live functional prototype to see these capabilities running live. Thank you, and I look forward to your questions."
+        `
+      }
+    ];
+
+    let currentSlide = 0;
+    let showNotes = true;
+
+    // Initialize Dropdown
+    const slideSelect = document.getElementById('slideSelect');
+    slidesData.forEach((s, idx) => {
+      const opt = document.createElement('option');
+      opt.value = idx;
+      opt.innerText = `${s.num}. ${s.title}`;
+      slideSelect.appendChild(opt);
+    });
+
+    function renderSlide(index) {
+      const slide = slidesData[index];
+      const viewport = document.getElementById('slideViewport');
+
+      viewport.innerHTML = `
+        <!-- Slide Top Bar -->
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-4 mb-4">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-slate-800 text-indigo-400 border border-slate-700">
+              ${slide.category}
+            </span>
+            <span class="text-xs text-slate-400 font-medium">${slide.badge}</span>
+          </div>
+          <div class="text-xs font-mono text-slate-500">
+            Slide ${slide.num} of ${slidesData.length}
+          </div>
+        </div>
+
+        <!-- Slide Header -->
+        <div class="mb-4">
+          <h2 class="heading-font text-2xl md:text-3xl font-extrabold text-white tracking-tight">${slide.title}</h2>
+          <p class="text-slate-400 text-sm mt-1">${slide.subtitle}</p>
+        </div>
+
+        <!-- Slide Body -->
+        <div class="flex-1 flex flex-col justify-center">
+          ${slide.content}
+        </div>
+
+        <!-- Slide Footer Bar -->
+        <div class="border-t border-slate-800/80 pt-3 mt-4 flex items-center justify-between text-xs text-slate-500">
+          <span>TalentAI &bull; Confidential & Proprietary</span>
+          <span class="text-slate-400">Next-Generation AI Recruitment System</span>
+        </div>
+      `;
+
+      // Update speaker notes
+      document.getElementById('speakerNotesContent').innerHTML = slide.speakerNotes;
+      document.getElementById('currentSlideNum').innerText = slide.num;
+      document.getElementById('slideSelect').value = index;
+
+      // Update Prev / Next button states
+      document.getElementById('prevBtn').disabled = index === 0;
+      document.getElementById('nextBtn').disabled = index === slidesData.length - 1;
+    }
+
+    function changeSlide(direction) {
+      const newIndex = currentSlide + direction;
+      if (newIndex >= 0 && newIndex < slidesData.length) {
+        currentSlide = newIndex;
+        renderSlide(currentSlide);
+      }
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < slidesData.length) {
+        currentSlide = index;
+        renderSlide(currentSlide);
+      }
+    }
+
+    function toggleNotes() {
+      showNotes = !showNotes;
+      const notesEl = document.getElementById('speakerNotesContainer');
+      const btn = document.getElementById('notesToggleBtn');
+      if (showNotes) {
+        notesEl.classList.remove('hidden');
+        btn.classList.add('bg-indigo-900/40', 'border-indigo-500/50', 'text-indigo-300');
+      } else {
+        notesEl.classList.add('hidden');
+        btn.classList.remove('bg-indigo-900/40', 'border-indigo-500/50', 'text-indigo-300');
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        changeSlide(1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        changeSlide(-1);
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      }
+    });
+
+    // Initial render
+    renderSlide(0);
+    toggleNotes(); // Show notes by default
+  </script>
+</body>
+</html>

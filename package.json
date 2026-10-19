@@ -1,0 +1,25 @@
+{
+  "name": "ai-recruitment-platform-root",
+  "version": "1.0.0",
+  "description": "TalentAI - Intelligent AI Recruitment Platform for Easwari Engineering College",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "start": "node backend/server.js",
+    "build": "npm --prefix frontend install && npm --prefix frontend run build && npm --prefix backend install",
+    "build:frontend": "npm --prefix frontend run build",
+    "backend": "npm --prefix backend start",
+    "backend:dev": "npm --prefix backend run dev",
+    "frontend": "npm --prefix frontend run dev",
+    "db:init": "npm --prefix backend run db:init"
+  },
+  "keywords": [
+    "recruitment",
+    "ai",
+    "ats",
+    "mern",
+    "sql",
+    "easwari-engineering-college"
+  ],
+  "author": "Easwari Engineering College",
+  "license": "ISC"
+}

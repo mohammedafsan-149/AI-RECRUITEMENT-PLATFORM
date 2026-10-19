@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TalentAI | Enterprise AI Recruitment Platform - Easwari Engineering College</title>
+  <link rel="icon" type="image/png" href="college_crest_square.png">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- React 18 & ReactDOM (Local Offline-First with Global CDN Fallback) -->
+  <script src="react.production.min.js"></script>
+  <script>
+    if (!window.React) {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"><\/script>');
+    }
+  </script>
+  <script src="react-dom.production.min.js"></script>
+  <script>
+    if (!window.ReactDOM) {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"><\/script>');
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f8fafc; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen selection:bg-indigo-100 selection:text-indigo-900">
+  <div id="root">
+    <div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1e293b; padding: 20px; text-align: center;">
+      <div style="background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 32px 40px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); max-width: 480px; width: 100%;">
+        <div style="width: 56px; height: 56px; margin: 0 auto 16px auto; border-radius: 14px; background: #f8fafc; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 4px;">
+          <img src="college_crest_square.png" alt="Easwari Engineering College Logo" style="width: 100%; height: 100%; object-fit: contain;" />
+        </div>
+        <h2 style="font-size: 18px; font-weight: 800; color: #0f172a; margin: 0 0 4px 0;">TalentAI</h2>
+        <p style="font-size: 11px; font-weight: 700; color: #4f46e5; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 0.5px;">Easwari Engineering College</p>
+        <p style="font-size: 13px; color: #64748b; line-height: 1.5; margin: 0 0 20px 0;">Launching Autonomous Talent Intelligence & Recruitment Platform...</p>
+        <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: #475569; background: #f1f5f9; padding: 6px 14px; border-radius: 9999px;">
+          <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
+          Initializing UI Workspace
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pre-compiled Vanilla JavaScript Application (Zero Babel Dependency, Instant Load) -->
+  <script src="app.bundle.js"></script>
+  <script>
+    // Fail-safe diagnostic handler
+    window.addEventListener('error', function(e) {
+      console.error('Diagnostic error trace:', e);
+      var root = document.getElementById('root');
+      if (root && root.innerText && root.innerText.indexOf('Launching Autonomous Talent') !== -1) {
+        var errBanner = document.createElement('div');
+        errBanner.style.marginTop = '16px';
+        errBanner.style.padding = '12px';
+        errBanner.style.borderRadius = '10px';
+        errBanner.style.background = '#fef2f2';
+        errBanner.style.border = '1px solid #fecaca';
+        errBanner.style.color = '#991b1b';
+        errBanner.style.fontSize = '12px';
+        errBanner.innerHTML = '<strong>Notice:</strong> If the workspace does not appear, please run <code>npm run dev</code> in VS Code terminal or open in Google Chrome/Microsoft Edge.';
+        root.firstElementChild.firstElementChild.appendChild(errBanner);
+      }
+    });
+  </script>
+</body>
+</html>
